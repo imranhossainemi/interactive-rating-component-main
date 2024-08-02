@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Interactive rating component</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    /* Custom styles */
+    @import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --white: hsl(0, 0%, 100%);
+      --light-grey: hsl(217, 12%, 63%);
+      --dark-blue: hsl(213, 19%, 18%);
+      --very-dark-blue: hsl(232, 12%, 8%);
+      --orange: hsl(25, 97%, 53%);
+    }
+
+    body {
+      font-family: 'Overpass', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    main {
+      background-color: var(--very-dark-blue);
+      width: 1440px;
+      height: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h2 {
+      color: var(--white);
+      font-size: 1.5rem;
+    }
+
+    p {
+      color: hsl(228, 12%, 44%);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .rating {
+      width: 415px;
+      height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: start;
+      padding: 30px;
+      background-color: hsl(215, 23%, 14%);
+      border-radius: 30px;
+    }
+
+    .rating> img {
+      padding: 20px;
+      border-radius: 50%;
+      background-color: var(--dark-blue);
+      margin-bottom: 20px;
+    }
+
+    .rates {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      flex-direction: row;
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+
+    button {
+      background-color: var(--dark-blue);
+      border: none;
+      border-radius: 50%;
+      color: var(--white);
+      cursor: pointer;
+      font-size: 15px;
+      padding: 15px 20px;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"] {
+      background-color: var(--orange);
+      color: var(--very-dark-blue);
+      padding: 15px 0;
+      border-radius: 35px;
+      font-size: 15px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    button:hover,
+    button:focus {
+      background-color: var(--orange);
+      color: var(--very-dark-blue);
+    }
+
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
+      background-color: var(--white);
+    }
+
+    .rate-active {
+      background-color: var(--white);
+      color: var(--very-dark-blue);
+    }
+
+    .thank {
+      display: none;
+      width: 415px;
+      height: 420px;
+      padding: 30px;
+      background-color: hsl(215, 23%, 14%);
+      border-radius: 30px;
+    }
+
+    .thank> .wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .wrapper> .selected-rate {
+      color: var(--orange);
+      font-size: 15px;
+      padding: 5px 20px;
+      border-radius: 35px;
+      background-color: var(--dark-blue);
+    }
+
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+
+    @media screen and (max-width: 650px) {
+      main {
+        width: 375px;
+        height: 670px;
+      }
+
+      .rating,
+      .thank {
+        width: 325px;
+        height: 365px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Rating state start -->
+    <section class="rating">
+      <img src="./images/icon-star.svg" alt="star">
+      <h2>How did we do?</h2>
+      <p>Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!</p>
+      <div class="rates">
+        <button class="rate">1</button>
+        <button class="rate">2</button>
+        <button class="rate">3</button>
+        <button class="rate">4</button>
+        <button class="rate">5</button>
+      </div>
+      <button type="submit">Submit</button>
+    </section>
+    <!-- Rating state end -->
+
+    <!-- Thank you state start -->
+    <section class="thank">
+      <div class="wrapper">
+        <img src="./images/illustration-thank-you.svg" alt="icon thank">
+        <p class="selected-rate">You selected <span class="rated"><!-- Add rating here --></span> out of 5</p>
+        <h2>Thank you!</h2>
+        <p>We appreciate you taking the time to give a rating. If you ever need more support, don’t hesitate to get in touch!</p>
+      </div>
+    </section>
+    <!-- Thank you state end -->
+  </main>
+  
+  <footer class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Imran Hossain</a>.
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('.rate');
+    const submitButton = document.querySelector('button[type="submit"]');
+    const rating = document.querySelector('.rated');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('rate-active'));
+        button.classList.add('rate-active');
+      });
+    });
+
+    submitButton.addEventListener('click', () => {
+      const selectedRate = document.querySelector('.rate-active');
+      rating.textContent = selectedRate.textContent;
+      document.querySelector('.rating').style.display = 'none';
+      document.querySelector('.thank').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
